@@ -1,0 +1,16 @@
+
+
+module Stack
+(
+ pop, push
+) where
+
+import Control.Monad.State
+
+type Stack a = [a]
+
+pop :: State (Stack a) a
+pop = state (\ (x:xs) -> (x, xs))
+
+push :: a -> State (Stack a) ()
+push a = state (\xs -> ((), a:xs))
