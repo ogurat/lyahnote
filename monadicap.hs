@@ -207,7 +207,8 @@ printe = print
 printapr :: (Num [t], Num t) => [[t]] -> IO ()
 printapr = print
 -}
-testAp = do
+
+main = do
     print $ mapapr (*) (+ 5) 5
     print $ mapapm (Just (+ 3)) (Just 4)
     print $ mapapm (Just (+ 3)) Nothing

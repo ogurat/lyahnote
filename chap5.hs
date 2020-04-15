@@ -96,6 +96,7 @@ last' = foldl1 (\_ x -> x)
 and' :: [Bool] -> Bool
 and' xs = foldr (&&) True xs
 
+and_test = and' [5==5, 'a' == 'a']
 
 -- 5.6
 

@@ -3,12 +3,15 @@ maximum' :: Ord a => [a] -> a
 maximum' [x] = x
 maximum' (x:xs) = x `max` (maximum' xs)
 
-replicate' :: (Ord i, Num i) => i -> a -> [a]
+replicate' :: Int -> a -> [a]
 replicate' n x
     | n <= 0    = []
-    | otherwise = x : replicate' (n - 1) x
+    | otherwise = x : replicate' (pred n) x
 
+testReplicate = replicate' 6 'a'
+testReplicate2 = replicate' 4 0
 
+take' :: Int -> [a] -> [a]
 take' n _
     | n <= 0    = []
 take' _ [] = []
@@ -23,6 +26,7 @@ elem' a [] = False
 elem' a (x:xs)
     | a == x = True
     | otherwise = a `elem'` xs
+
 
 quicksort :: Ord a => [a] -> [a]
 quicksort [] = []

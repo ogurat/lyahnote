@@ -184,13 +184,14 @@ testJoin = do
 
 -- filterM
 
+keepSmall :: Int -> Writer [String] Bool
 keepSmall x
     | x < 4 = do
         tell ["keeping:" ++ show x]
-	return True
+        return True
     | otherwise = do
         tell [show x ++ " is throwing it away"]
-	return False
+        return False
 
 fil = filterM keepSmall [9,1,5,3]
 powerset = filterM (\x -> [True, False])

@@ -116,7 +116,7 @@ printmaplifte f m =
 printe :: Show a => [Either String a] -> IO ()
 printe = print
 
-testLift = do
+main = do
     print $ mapliftm (\x -> x * x) (Just 5)
     print $ mapliftm (\x -> x * x) Nothing
     print $ mapliftl (\x -> x * x) [3,4,5,6,7]
@@ -127,5 +127,6 @@ testLift = do
     printe $ maplifte (\x -> x * x) (Right 3)
     printe $ maplifte (++ "!") (Right "asd")
     printe $ maplifte (\x -> x * x) (Left "err!") 
-    print (r1 4)
-    print (r2 4 5)
+    print $ r1 4
+    print $ r2 4 5
+    print $ r3 "QWERTY"

@@ -64,6 +64,7 @@ joinst sh  = let h = runState sh
                 let (a, newSt) = h s
                     g = runState ((\m -> m) a)
         in g newSt
+
 joinst1 :: State s (State s a) -> State s a
 joinst1 sh = let h = runState sh
             in state $ \s ->
@@ -76,8 +77,7 @@ mapjoinst mm s =
     in map fn [join,join',joinst,joinst1]
 
 
-
-testJoin = do
+main = do
     --print $ runWriter jw
     print $ mapjoinm (Just (Just 9))
     print $ mapjoinm (Just Nothing :: Maybe (Maybe Int))

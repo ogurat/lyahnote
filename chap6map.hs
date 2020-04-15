@@ -16,10 +16,10 @@ v2 = Map.lookup "betty" intBook
 phoneBookToMap xs = Map.fromListWith (++) $ map (\(k, v) -> (k, [v])) xs
 
 phoneBook' = [("betty", "555-2938")
-              ,("betty", "342-2492")
-              ,("bonnie", "452-2928")
-              ,("patsy", "439-2928")
-              ,("patsy", "943-2928")
+             ,("betty", "342-2492")
+             ,("bonnie", "452-2928")
+             ,("patsy", "439-2928")
+             ,("patsy", "943-2928")
     ]
 
 
