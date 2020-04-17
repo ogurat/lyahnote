@@ -27,6 +27,8 @@ elem' a (x:xs)
     | a == x = True
     | otherwise = a `elem'` xs
 
+testelem = 'q' `elem'` "abcqwerty"
+
 
 quicksort :: Ord a => [a] -> [a]
 quicksort [] = []

@@ -4,7 +4,7 @@ import Data.Char
 
 phoneBook = Map.fromList $ phoneBook'
 
-v = Map.lookup "grace" phoneBook 
+v = Map.lookup "grace" phoneBook
 newbook = Map.insert "grace" "341-9021" phoneBook
 
 string2digits :: String -> [Int]
@@ -17,7 +17,7 @@ v2 = Map.lookup "betty" intBook
 --phoneBookToMap xs = Map.fromListWith (++) $ map (\(k, v) -> (k, [v])) xs
 
 phoneBookToMap :: Ord k => [(k, a)] -> Map.Map k [a]
-phoneBookToMap = Map.fromListWith (++) . map (\(k, v) -> (k, [v])) 
+phoneBookToMap = Map.fromListWith (++) . map (\(k, v) -> (k, [v]))
 
 phoneBook' =
     [("betty","555-2938")

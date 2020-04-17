@@ -14,9 +14,6 @@ import Stack
 
 liftM' :: Monad m => (t -> b) -> m t -> m b
 liftM' f m = m >>= (\x -> return (f x))
-liftM'' f m = do
-    x <- m
-    return (f x)
 
 liftMaybe f (Just y) = (\x -> return (f x)) y
 liftMaybe _ Nothing  = Nothing

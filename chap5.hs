@@ -16,7 +16,13 @@ zipc = zipWith' (++) ["foo ", "bar ", "baz "] ["fighters", "hoppers", "aldrin"]
 zipd = zipWith' (*) (replicate 5 2) [1..]
 zipe = zipWith' (zipWith' (*)) [[1,2,3],[3,5,6],[2,3,4]] [[3,2,2],[3,4,5],[5,4,3]]
 
--- 5.3
+flip' :: (a -> b -> c) -> (b -> a -> c)
+flip' f y x = f x y
+
+flipa = flip' zip [1,2,3,4,5] "hello"
+v = zipWith (flip' div) [2,2..] [10,8,6,4,2]
+
+-- 5.3 The Functional Programmer’s Toolbox
 
 -- map
 mapa = map (+3) [1,5,3,1,6]
@@ -33,7 +39,7 @@ filter4 = filter (\x -> not (null x)) [[1,2,3],[],[3,4,5],[2,2],[],[],[]]
 filter5 = filter (`elem` ['a'..'z']) "u LaUgH aT mE BeCaUsE I aM diFfeRent"
 filter6 = filter (`elem` ['A'..'Z']) "i LAuGh at you bEcause u R all the same"
 filter7 = filter (< 15) (filter even [1..20])
-filter8 = [x | x <- [1..20], x < 1, even x] 
+filter8 = [x | x <- [1..20], x < 1, even x]
 
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
@@ -44,12 +50,16 @@ quicksort (x:xs) =
 
 testqs = quicksort [10,2,5,3,1,6,7,4,2,3,4,8,9]
 
+largestDivisible = head (filter p [100000,99999..])
+    where p x = x `mod` 3829 == 0
+
 ff = takeWhile (/=' ') "elephants know how to party"
 
 ss = sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
 ss2 = sum (takeWhile (<10000) [m | m <- [n^2 | n <-[1..]], odd m])
 
 -- Collatz sequences
+chain :: Integer -> [Integer]
 chain 1 = [1]
 chain n
       | even n = n : chain (n `div` 2)
@@ -62,7 +72,7 @@ numLongChains = length (filter isLong (map chain [1..100]))
 aa = zipWith (\a b -> (a*30 +3)/b) [5,4,3,2,1] [1,2,3,4,5]
 ab = map (\(a,b) -> a + b) [(1,2), (3,5), (6,3), (2,6), (2,5)]
 
--- 5.5 
+-- 5.5 I Fold You So
 
 sum' :: (Num a) => [a] -> a
 sum' = foldl (+) 0
@@ -94,16 +104,17 @@ last' = foldl1 (\_ x -> x)
 -- fold infinite list
 
 and' :: [Bool] -> Bool
-and' xs = foldr (&&) True xs
+and' = foldr (&&) True
 
-and_test = and' [5==5, 'a' == 'a']
+and_test = and' [True, False, True]
+and_repeat = and' (repeat False)
 
--- 5.6
+-- 5.6 Function Application with $
 
 sumsqrt = sum (map sqrt [1..130])
 sumsqrt' = sum $ map sqrt [1..130]
 
-a = sqrt ( 3 + 4 + 9)
+a = sqrt (3 + 4 + 9)
 a' = sqrt $ 3 + 4 + 9
 
 b = sum (filter (> 10) (map (*2) [2..10]))
@@ -112,7 +123,7 @@ b' = sum $ filter (> 10) $ map (*2) [2..10]
 c = map ($ 3) [(4+), (10*), (^2), sqrt]
 
 
--- 5.7
+-- 5.7 Function Composition
 
 d = map (\x -> negate (abs x)) [5, 3, -6, 7, -3, 2, -19, 24]
 d' = map (negate . abs) [5, 3, -6, 7, -3, 2, -19, 24]

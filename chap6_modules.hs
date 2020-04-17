@@ -7,7 +7,7 @@ numUniques = length . nub
 testUniq = (numUniques [1, 5, 1, 8, 9], numUniques ['a', 'b', 'b'], numUniques [True,True, False])
 
 v2 = words "hey these are the words in this sentence"
-v3 = group ["boom", "bip", "bip", "boom","boom"]
+v3 = group ["boom","bip","bip","boom","boom"]
 
 
 wordNums = map (\ws -> (head ws, length ws)) . group . sort . words
