@@ -7,10 +7,14 @@ numUniques = length . nub
 testUniq = (numUniques [1, 5, 1, 8, 9], numUniques ['a', 'b', 'b'], numUniques [True,True, False])
 
 v2 = words "hey these are the words in this sentence"
+v3 = group ["boom", "bip", "bip", "boom","boom"]
+
 
 wordNums = map (\ws -> (head ws, length ws)) . group . sort . words
 
-v3 = wordNums "wa wa wee wa wee"
+w' = wordNums "wa wa wee wa wee"
+w'' = wordNums "boom bip bip   boom boom"
+
 
 needle `isIn` haystack = any (needle `isPrefixOf`) (tails haystack)
 
@@ -25,7 +29,7 @@ firstTo40 = find (\x -> digitSum x == 40) [1..]
 
 firstTo n = find (\x -> digitSum x == n) [1..]
 
-v4 = map firstTo [27, 13, 40, 42]
+first1 = map firstTo [27, 13, 40, 42]
 
 -- 正格な左畳み込み
 

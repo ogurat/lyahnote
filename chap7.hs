@@ -1,7 +1,7 @@
 
 import qualified Data.Map as Map
 
--- 7.2 Algebraic data types intro
+-- 7.2 Shaping Up
 
 data Point = Point Float Float deriving (Show)
 data Shape =
@@ -41,7 +41,7 @@ data Person = Person { firstName :: String,
 data Car = Car { company :: String,
                  model :: String,
                  year :: Int } deriving (Show)
-  
+
 car = Car { company="Ford", model="Mustang", year=1967 }
 
 
@@ -72,6 +72,7 @@ test7_5_2 =
      minBound :: Day, maxBound :: Day,
      succ Monday, succ Saturday, pred Saturday)
 
+
 -- 7.6 Type synonyms
 
 type AssocList k v =  [(k, v)]
@@ -92,16 +93,17 @@ lockerLookup number map =
 
 lockers :: LockerMap
 lockers = Map.fromList
-    [(100,(Taken,"ZD39I"))  
-    ,(101,(Free,"JAH3I"))  
-    ,(103,(Free,"IQSA9"))  
-    ,(105,(Free,"QOTSA"))  
-    ,(109,(Taken,"893JJ"))  
-    ,(110,(Taken,"99292"))  
+    [(100,(Taken,"ZD39I"))
+    ,(101,(Free,"JAH3I"))
+    ,(103,(Free,"IQSA9"))
+    ,(105,(Free,"QOTSA"))
+    ,(109,(Taken,"893JJ"))
+    ,(110,(Taken,"99292"))
     ]
 
 lockertest =
     map (\n -> lockerLookup n lockers) [101,100,102,110,105]
+
 
 -- 7.7 Recursive data structures
 
@@ -153,7 +155,7 @@ test7_8_2 =
     [Red, Yellow, Green]
 
 
-data Maybe' a = Nothing' | Just' a  deriving (Show)
+data Maybe' a = Nothing' | Just' a deriving (Show)
 
 
 instance (Eq m) => Eq (Maybe' m) where
@@ -181,9 +183,9 @@ instance YesNo Bool where
     yesno False = False
     yesno _     = True
 
-instance YesNo (Maybe' a) where
-    yesno Nothing'  = False
-    yesno (Just' _) = True
+instance YesNo (Maybe a) where
+    yesno Nothing  = False
+    yesno (Just _) = True
 
 instance YesNo (Tree a) where
     yesno EmptyTree = False
@@ -193,23 +195,29 @@ instance YesNo TrafficLight where
     yesno Red = False
     yesno _ = True
 
-test7_9_1 =
-    [yesno (length []), yesno "haha", yesno "", yesno (Just' 0), yesno Nothing', yesno True, yesno EmptyTree, yesno [], yesno Green]
+test_yesno =
+    --[yesno "haha", yesno "", yesno (Just 0), yesno Nothing, yesno True, yesno EmptyTree, yesno [0,0,0], yesno [],yesno Green,yesno Red]
+    (f [0::Int,1], f ["haha",""], f [Just 0,Nothing], f [True,False], f [singleton 0,EmptyTree], f [[0],[]], f [Green,Red])
+        where f :: YesNo a => [a] -> [Bool]
+              f = map yesno
 
+yesnoIf :: (YesNo y) => y -> a -> a -> a
 yesnoIf val yesResult noResult =
     if yesno val
-       then yesResult  else noResult
+        then yesResult  else noResult
 
-test7_9_2 =
-    [yesnoIf [] "yeah!" "no!", yesnoIf [2,3,4] "yeah!" "no!", 
-     yesnoIf (Just' 500) "yeah!" "no!", yesnoIf Nothing' "yeah!" "no!",
+test_if =
+    [yesnoIf [] "yeah!" "no!",
+     yesnoIf [2,3,4] "yeah!" "no!",
+     yesnoIf (Just 500) "yeah!" "no!",
+     yesnoIf Nothing "yeah!" "no!",
      yesnoIf True "yeah!" "no!"]
 
 
--- 7.10 Functor
+-- 7.10 The Functor Type Class
 
 {- Defined in ‘GHC.Base
-instance Functor Maybe' where 
+instance Functor Maybe' where
     fmap f (Just' x) = Just' (f x)
     fmap f Nothing' = Nothing'
 -}
@@ -240,4 +248,3 @@ test7_10_3 =
     let a5 = fmap (* 5) (Right 8)
         a6 = fmap (* 5) (Left 10)
     in (a5, a6)
-
